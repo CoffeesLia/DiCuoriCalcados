@@ -1,12 +1,10 @@
-# DiCuoriCalcados
-
 ---
 
-# 📄 Documentação da API – Loja de Sapatos 👟
+# 👟 DiCuori – API da Loja de Sapatos
 
 ## 📌 Visão Geral
 
-Esta API foi desenvolvida em **ASP.NET Core Web API** com o objetivo de gerenciar os dados de uma loja virtual de sapatos. A aplicação permite o controle de produtos, usuários, pedidos, e integrações com pagamentos.
+**DiCuori** é uma API desenvolvida com **ASP.NET Core Web API** para servir como o back-end de uma loja virtual de sapatos. A API permite o gerenciamento de produtos, controle de estoque e poderá ser expandida com autenticação, carrinho de compras, pedidos e pagamentos.
 
 ---
 
@@ -15,16 +13,15 @@ Esta API foi desenvolvida em **ASP.NET Core Web API** com o objetivo de gerencia
 * **Linguagem:** C# (.NET 6/7)
 * **Framework:** ASP.NET Core Web API
 * **ORM:** Entity Framework Core
-* **Banco de Dados:** SQL Server (ou SQLite)
-* **API Test:** Swagger / Postman
-* **Autenticação:** JWT (opcional)
+* **Banco de Dados:** SQL Server (pode ser adaptado para SQLite ou PostgreSQL)
+* **Ferramentas de Teste:** Swagger UI / Postman
 
 ---
 
 ## 📁 Estrutura do Projeto
 
 ```
-LojaDeSapatos.API/
+DiCuori.API/
 │
 ├── Controllers/
 │   └── ProdutosController.cs
@@ -37,14 +34,12 @@ LojaDeSapatos.API/
 │
 ├── appsettings.json
 ├── Program.cs
-└── Startup.cs (caso use .NET 5 ou anterior)
+└── DiCuori.API.csproj
 ```
 
 ---
 
-## 🧱 Entidades (Models)
-
-### 📦 Produto
+## 🧱 Entidade: Produto
 
 ```csharp
 public class Produto
@@ -62,34 +57,34 @@ public class Produto
 
 ## 🔌 Endpoints da API
 
-### 🔍 Produtos
+### 📦 Produtos
 
-| Método | Endpoint             | Descrição                       |
-| ------ | -------------------- | ------------------------------- |
-| GET    | `/api/produtos`      | Lista todos os produtos         |
-| GET    | `/api/produtos/{id}` | Retorna um produto específico   |
-| POST   | `/api/produtos`      | Cria um novo produto            |
-| PUT    | `/api/produtos/{id}` | Atualiza os dados de um produto |
-| DELETE | `/api/produtos/{id}` | Remove um produto               |
-
----
-
-## 🔐 Autenticação (se aplicável)
-
-**JWT (JSON Web Token)** pode ser utilizado para proteger endpoints sensíveis (como `/pedidos`, `/usuarios`, etc).
+| Método | Endpoint             | Descrição                     |
+| ------ | -------------------- | ----------------------------- |
+| GET    | `/api/produtos`      | Lista todos os produtos       |
+| GET    | `/api/produtos/{id}` | Retorna um produto pelo ID    |
+| POST   | `/api/produtos`      | Cadastra um novo produto      |
+| PUT    | `/api/produtos/{id}` | Atualiza um produto existente |
+| DELETE | `/api/produtos/{id}` | Exclui um produto do catálogo |
 
 ---
 
-## 🛠️ Configuração e Execução
+## 🔐 Autenticação (futuramente)
 
-### 1. Clonar o Projeto
+A API poderá ser protegida com **JWT (JSON Web Token)** para proteger áreas como carrinho, pedidos e gerenciamento de usuários.
+
+---
+
+## 🛠️ Como Rodar o Projeto
+
+### 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/usuario/LojaDeSapatos.API.git
-cd LojaDeSapatos.API
+git clone https://github.com/usuario/DiCuori.API.git
+cd DiCuori.API
 ```
 
-### 2. Instalar Dependências
+### 2. Restaurar Dependências
 
 ```bash
 dotnet restore
@@ -97,22 +92,22 @@ dotnet restore
 
 ### 3. Configurar o Banco de Dados
 
-No `appsettings.json`:
+No arquivo `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=LojaDeSapatosDB;Trusted_Connection=True;"
+  "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=DiCuoriDB;Trusted_Connection=True;"
 }
 ```
 
-### 4. Aplicar Migrações
+### 4. Criar o Banco (via EF Core)
 
 ```bash
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-### 5. Rodar o Projeto
+### 5. Executar a API
 
 ```bash
 dotnet run
@@ -126,30 +121,31 @@ https://localhost:5001/swagger
 
 ---
 
-## ✅ Testes
+## ✅ Testando a API
 
-Recomenda-se testar os endpoints com:
+Utilize:
 
-* **Swagger UI** (já embutido)
-* **Postman** (coleções podem ser criadas para facilitar)
+* **Swagger UI:** A interface automática para testar endpoints.
+* **Postman:** Para simular chamadas REST, útil em desenvolvimento avançado.
 
 ---
 
 ## 📈 Funcionalidades Futuras
 
-* Autenticação e autorização com JWT
-* CRUD de usuários
-* Integração com gateways de pagamento (ex: Stripe, PagSeguro)
-* Carrinho de compras
-* Upload de imagens
-* Painel administrativo
+* 🔐 Autenticação e autorização com JWT
+* 🛒 Carrinho de compras
+* 💳 Integração com pagamentos (ex: Stripe, Mercado Pago)
+* 👤 Cadastro e login de usuários
+* 🖼️ Upload de imagens dos produtos
+* 📊 Dashboard administrativo
 
 ---
 
 ## 📬 Contato
 
-* Desenvolvedor: Seu Nome
+* Projeto: **DiCuori – Loja de Sapatos**
+* Desenvolvedor: \[Seu Nome]
 * E-mail: [seu@email.com](mailto:seu@email.com)
-* GitHub: [@seuusuario](https://github.com/seuusuario)
+* GitHub: [@CoffeesLia](https://github.com/CoffeesLia)
 
 ---
