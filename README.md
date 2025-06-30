@@ -155,5 +155,3 @@ Recomenda-se testar os endpoints com:
 * GitHub: [@seuusuario](https://github.com/seuusuario)
 
 ---
-
-Se quiser, posso gerar esse conteúdo como um arquivo `.md` ou organizar em múltiplos arquivos para usar como base de documentação no GitHub Pages, Swagger ou outro sistema. Deseja isso?
