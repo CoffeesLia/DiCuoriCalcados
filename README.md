@@ -1,7 +1,5 @@
 # DiCuoriCalcados
 
-Claro! Aqui está um **modelo de documentação técnica** para o back-end do site de **loja de sapatos** desenvolvido em **C# com ASP.NET Core**. Essa documentação pode ser incluída em um arquivo `README.md` (caso esteja no GitHub) ou em um documento interno da equipe.
-
 ---
 
 # 📄 Documentação da API – Loja de Sapatos 👟
