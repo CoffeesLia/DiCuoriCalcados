@@ -10,7 +10,7 @@
 
 1. [Introdução](w)
 2. [Tecnologias Utilizadas](w)
-3. [Arquitetura do Projeto](w)
+3. [Arquitetura do Projeto]([w](https://github.com/CoffeesLia/DiCuoriCalcados/tree/main?tab=readme-ov-file#3-arquitetura-do-projeto))
 4. [Entidades e Relacionamentos](w)
 5. [Endpoints da API](w)
 6. [Validações e Regras de Negócio](w)
