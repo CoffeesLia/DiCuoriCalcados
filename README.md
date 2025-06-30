@@ -1,149 +1,192 @@
-# 👟 DiCuori – API da Loja de Sapatos
+---
 
-## 📌 Visão Geral
+# 📄 Documentação Técnica – Backend C\#
 
-**DiCuori** é uma API desenvolvida com **ASP.NET Core Web API** para servir como o back-end de uma loja virtual de sapatos. A API permite o gerenciamento de produtos, controle de estoque e poderá ser expandida com autenticação, carrinho de compras, pedidos e pagamentos.
+## Projeto: **DiCuori – Loja de Sapatos**
 
 ---
 
-## ⚙️ Tecnologias Utilizadas
+## 🧾 Sumário
 
-* **Linguagem:** C# (.NET 6/7)
-* **Framework:** ASP.NET Core Web API
-* **ORM:** Entity Framework Core
-* **Banco de Dados:** SQL Server (pode ser adaptado para SQLite ou PostgreSQL)
-* **Ferramentas de Teste:** Swagger UI / Postman
+1. [Introdução](w)
+2. [Tecnologias Utilizadas](w)
+3. [Arquitetura do Projeto](w)
+4. [Entidades e Relacionamentos](w)
+5. [Endpoints da API](w)
+6. [Validações e Regras de Negócio](w)
+7. [Autenticação e Autorização](w)
+8. [Padrões Adotados](w)
+9. [Como Executar o Projeto](w)
+10. [Testes](w)
+11. [Futuras Melhorias](w)
 
 ---
 
-## 📁 Estrutura do Projeto
+## 1. Introdução
+
+O sistema **DiCuori** é uma API REST desenvolvida em **C# (.NET 7)** com o objetivo de oferecer suporte a uma loja de sapatos, permitindo o gerenciamento de produtos, categorias, estoque, vendas e clientes.
+
+---
+
+## 2. Tecnologias Utilizadas
+
+* [ASP.NET Core Web API](w)
+* [Entity Framework Core](w)
+* [SQL Server](w)
+* [AutoMapper](w)
+* [FluentValidation](w)
+* [Swagger (Swashbuckle)](w)
+* [JWT (JSON Web Token)](w)
+* [xUnit](w) / [NUnit](w) para testes
+* [Docker](w) (opcional)
+
+---
+
+## 3. Arquitetura do Projeto
+
+A aplicação segue a arquitetura em **camadas**:
 
 ```
-DiCuori.API/
+DiCuori/
 │
-├── Controllers/
-│   └── ProdutosController.cs
-│
-├── Models/
-│   └── Produto.cs
-│
-├── Data/
-│   └── LojaContext.cs
-│
-├── appsettings.json
-├── Program.cs
-└── DiCuori.API.csproj
+├── DiCuori.API               # Camada de apresentação (controllers, configs)
+├── DiCuori.Application       # Regras de negócio (services, DTOs, validações)
+├── DiCuori.Domain            # Entidades e interfaces de domínio
+├── DiCuori.Infra.Data        # Repositórios e DbContext
+└── DiCuori.Tests             # Testes unitários e de integração
 ```
 
 ---
 
-## 🧱 Entidade: Produto
+## 4. Entidades e Relacionamentos
 
-```csharp
-public class Produto
-{
-    public int Id { get; set; }
-    public string Nome { get; set; }
-    public string Descricao { get; set; }
-    public decimal Preco { get; set; }
-    public int Estoque { get; set; }
-    public string Tamanho { get; set; }
-}
-```
+### 4.1. Produto
+
+* Id
+* Nome
+* Descrição
+* Preço
+* Tamanho
+* CategoriaId *(FK)*
+* Estoque
+
+### 4.2. Categoria
+
+* Id
+* Nome
+
+### 4.3. Cliente
+
+* Id
+* Nome
+* Email
+* CPF
+* Endereço
+
+### 4.4. Pedido
+
+* Id
+* ClienteId *(FK)*
+* Data
+* Total
+* Lista de Produtos *(Relacionamento N\:N com Produto)*
 
 ---
 
-## 🔌 Endpoints da API
+## 5. Endpoints da API
 
-### 📦 Produtos
+Exemplo de rotas:
 
-| Método | Endpoint             | Descrição                     |
-| ------ | -------------------- | ----------------------------- |
-| GET    | `/api/produtos`      | Lista todos os produtos       |
-| GET    | `/api/produtos/{id}` | Retorna um produto pelo ID    |
-| POST   | `/api/produtos`      | Cadastra um novo produto      |
-| PUT    | `/api/produtos/{id}` | Atualiza um produto existente |
-| DELETE | `/api/produtos/{id}` | Exclui um produto do catálogo |
+### Produto
+
+| Método | Rota                 | Descrição                |
+| ------ | -------------------- | ------------------------ |
+| GET    | `/api/produtos`      | Listar todos os produtos |
+| GET    | `/api/produtos/{id}` | Buscar por ID            |
+| POST   | `/api/produtos`      | Criar novo produto       |
+| PUT    | `/api/produtos/{id}` | Atualizar produto        |
+| DELETE | `/api/produtos/{id}` | Deletar produto          |
+
+### Cliente
+
+| Método | Rota            | Descrição                |
+| ------ | --------------- | ------------------------ |
+| GET    | `/api/clientes` | Listar todos os clientes |
+| POST   | `/api/clientes` | Criar cliente            |
+
+### Autenticação
+
+* `POST /api/auth/login`
+* `POST /api/auth/register`
 
 ---
 
-## 🔐 Autenticação (futuramente)
+## 6. Validações e Regras de Negócio
 
-A API poderá ser protegida com **JWT (JSON Web Token)** para proteger áreas como carrinho, pedidos e gerenciamento de usuários.
+* Nenhum produto pode ser criado com preço ≤ 0
+* CPF de cliente deve ser único e válido
+* Pedido deve conter pelo menos 1 produto
+* Estoque é decrementado a cada venda
 
 ---
 
-## 🛠️ Como Rodar o Projeto
+## 7. Autenticação e Autorização
 
-### 1. Clonar o Repositório
+* Login com **JWT**
+* Roles: `Admin`, `Cliente`
+* Proteção via `[Authorize]` nas rotas sensíveis (ex: criação de produto)
+
+---
+
+## 8. Padrões Adotados
+
+* [RESTful](w) design
+* [SOLID](w) principles
+* Repository Pattern
+* DTOs para entrada e saída de dados
+* Logs com [Serilog](w)
+
+---
+
+## 9. Como Executar o Projeto
+
+### Pré-requisitos
+
+* .NET SDK 7+
+* SQL Server LocalDB ou Docker
+* Visual Studio / VS Code
+
+### Comandos
 
 ```bash
-git clone https://github.com/usuario/DiCuori.API.git
-cd DiCuori.API
-```
-
-### 2. Restaurar Dependências
-
-```bash
+# Restaurar pacotes
 dotnet restore
-```
 
-### 3. Configurar o Banco de Dados
-
-No arquivo `appsettings.json`:
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=DiCuoriDB;Trusted_Connection=True;"
-}
-```
-
-### 4. Criar o Banco (via EF Core)
-
-```bash
-dotnet ef migrations add InitialCreate
+# Aplicar migrations
 dotnet ef database update
+
+# Rodar a API
+dotnet run --project DiCuori.API
 ```
 
-### 5. Executar a API
-
-```bash
-dotnet run
-```
-
-Acesse o Swagger em:
-
-```
-https://localhost:5001/swagger
-```
+Swagger disponível em: `https://localhost:5001/swagger`
 
 ---
 
-## ✅ Testando a API
+## 10. Testes
 
-Utilize:
-
-* **Swagger UI:** A interface automática para testar endpoints.
-* **Postman:** Para simular chamadas REST, útil em desenvolvimento avançado.
-
----
-
-## 📈 Funcionalidades Futuras
-
-* 🔐 Autenticação e autorização com JWT
-* 🛒 Carrinho de compras
-* 💳 Integração com pagamentos (ex: Stripe, Mercado Pago)
-* 👤 Cadastro e login de usuários
-* 🖼️ Upload de imagens dos produtos
-* 📊 Dashboard administrativo
+* Camada de testes automatizados com **xUnit**
+* Mock de dependências com **Moq**
+* Testes de integração com banco de dados em memória
 
 ---
 
-## 📬 Contato
+## 11. Futuras Melhorias
 
-* Projeto: **DiCuori – Loja de Sapatos**
-* Desenvolvedor: \[Seu Nome]
-* E-mail: [seu@email.com](mailto:seu@email.com)
-* GitHub: [@CoffeesLia](https://github.com/CoffeesLia)
+* Integração com métodos de pagamento (Pix, Cartão)
+* Dashboard administrativo
+* Recuperação de senha por e-mail
+* Sistema de recomendação baseado em preferências
+* Internacionalização
 
 ---
