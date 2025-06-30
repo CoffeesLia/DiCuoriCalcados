@@ -1,5 +1,3 @@
----
-
 # 👟 DiCuori – API da Loja de Sapatos
 
 ## 📌 Visão Geral
